@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CharacterController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,6 +22,18 @@ Route::get('/', function () {
         'characters' => 'dit is data lol',
     ]);
 });
+
+Route::get('/createcharacter', function () {
+    return Inertia::render('CreateCharacter');
+})->name('character.create');
+
+Route::get('/createbanner', function () {
+    return Inertia::render('CreateBanner');
+})->name('banner.create');
+
+Route::post('/characters', [CharacterController::class, 'store'])->name('character.store');
+
+Route::post('/banners', [BannerController::class, 'store'])->name('banner.store');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
