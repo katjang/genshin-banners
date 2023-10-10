@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+    /** SELECT `name`,`rarity`,`element`,`weapon_type` FROM `genshin`;
      * Run the migrations.
      */
     public function up(): void
@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('rarity');
             $table->integer('weapon_type');
+            $table->integer('element');
             $table->timestamps();
         });
     }

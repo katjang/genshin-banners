@@ -2,16 +2,27 @@ export class Character {
     id!: number;
     name!: string;
     rarity!: number;
-    type!: WeaponType;
+    weapon_type!: WeaponType;
+    element!: Element;
     last_banner?: Banner;
 }
 
 export enum WeaponType {
-    BOW,
+    BOW = 0,
     CATALYST,
     CLAYMORE,
     POLEARM,
     SWORD,
+}
+
+export enum Element {
+    GEO = 0,
+    ANEMO,
+    PYRO,
+    ELECTRO,
+    CRYO,
+    DENDRO,
+    Hydro,
 }
 
 export class Banner {

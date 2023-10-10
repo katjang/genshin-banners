@@ -5,6 +5,7 @@ use App\Http\Controllers\CharacterController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Character;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Overview', [
-        'characters' => 'dit is data lol',
+        'characters' => Character::all(),
     ]);
 });
 

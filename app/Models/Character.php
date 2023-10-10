@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Banner;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Banner;
 
 class Character extends Model
 {
@@ -13,8 +14,14 @@ class Character extends Model
 
     protected $guarded = [];
 
-    public function characters(): HasMany
+    public function banners(): HasMany
     {
         return $this->hasMany(Banner::class);
+    }
+
+    protected function lastBanner(): Attribute {
+        return Attribute::make(
+            get: fn () => $this->banners()->last()->get()
+        );
     }
 }

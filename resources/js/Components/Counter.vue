@@ -28,16 +28,16 @@ function pad(num: number, size: number): string {
 </script>
 
 <template>
-    <v-row justify="center" class="text-h4" no-gutters>
-        <v-col cols="auto" v-if="months">
+    <v-row justify="center" class="text-body-1 font-weight-bold" no-gutters>
+        <v-col cols="auto" v-if="months" class="px-2">
              {{ months }} Months
         </v-col>
-        <v-col cols="auto" v-if="days">
+        <v-col cols="auto" v-if="days" class="px-2">
             {{ days }} Days
         </v-col>
     </v-row>
-    <v-row class="text-h5">
-        <v-col class="text-center pt-1">
+    <v-row class="text-body-2 font-weight-bold" no-gutters>
+        <v-col class="text-center">
             {{ pad(hours,2) }}:{{ pad(minutes,2) }}:{{ pad(seconds,2) }}
         </v-col>
     </v-row>
