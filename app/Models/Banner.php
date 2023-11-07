@@ -4,15 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Character;
 
 class Banner extends Model
 {
     use HasFactory;
 
-    public function featuredCharacters(): HasMany
+    protected $guarded = ['id'];
+
+    public function featured(): BelongsToMany
     {
-        return $this->hasMany(Character::class);
+        return $this->BelongsToMany(Character::class);
     }
 }

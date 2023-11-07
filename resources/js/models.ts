@@ -28,7 +28,8 @@ export enum Element {
 export class Banner {
     id!: number;
     name!: string;
-    characters!: Character[];
+    patch!: string;
+    featured!: Character[];
     start_date!: Date;
     end_date!: Date;
 }

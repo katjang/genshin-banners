@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Character;
+use App\Models\Banner;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,17 +26,18 @@ Route::get('/', function () {
     ]);
 });
 
+// ---------------------ADMIN-----------------------------
+Route::get('/createbanner', [BannerController::class, 'create'])->name('banner.create');
 Route::get('/createcharacter', function () {
     return Inertia::render('CreateCharacter');
 })->name('character.create');
 
-Route::get('/createbanner', function () {
-    return Inertia::render('CreateBanner');
-})->name('banner.create');
-
 Route::post('/characters', [CharacterController::class, 'store'])->name('character.store');
-
 Route::post('/banners', [BannerController::class, 'store'])->name('banner.store');
+
+Route::get('/banners/{banner}', [BannerController::class, 'edit'])->name('banner.edit');
+Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banner.update');
+// ---------------------ADMIN-----------------------------
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

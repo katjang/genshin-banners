@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Banner;
 
@@ -14,9 +14,9 @@ class Character extends Model
 
     protected $guarded = [];
 
-    public function banners(): HasMany
+    public function banners(): belongsToMany
     {
-        return $this->hasMany(Banner::class);
+        return $this->belongsToMany(Banner::class);
     }
 
     protected function lastBanner(): Attribute {
