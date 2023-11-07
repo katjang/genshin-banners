@@ -4,6 +4,8 @@ import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import { Banner, Character } from '@/models';
 
+import AdminLayout from '@/Layouts/AdminLayout.vue';
+
 const props = defineProps<{
     banner?: Banner;
     characters: Character[],
@@ -22,14 +24,16 @@ function updateBanner() {
             name: name.value, 
             patch: patch.value,
             start_date: start_date.value, 
-            end_date: end_date.value
+            end_date: end_date.value,
+            featured: featured.value,
        });
     } else {
         router.post('/banners', {
             name: name.value, 
             patch: patch.value,
             start_date: start_date.value, 
-            end_date: end_date.value
+            end_date: end_date.value,
+            featured: featured.value,
         });
     }
     
@@ -38,23 +42,33 @@ function updateBanner() {
 </script>
 
 <template dark>
-    <Head title="Create Character" />
-    <v-container fluid dark>
-       <v-form @submit.prevent="updateBanner">
-            <v-text-field v-model="name" label="name"></v-text-field>
-            <v-text-field v-model="patch" label="patch"></v-text-field>
-            <v-row>
-                <v-col> 
-                    <v-text-field dark show-adjacent-months v-model="start_date" label="Start Date"></v-text-field>
-                </v-col>
-                <v-col>
-                    <v-text-field dark show-adjacent-months v-model="end_date" label="End Date"></v-text-field>
-                </v-col>
-            </v-row>
-            <v-select variant="outlined" chips multiple label="Characters" v-model="featured" :items="characters" item-title="name" item-value="id"></v-select>
-            <v-btn type="submit">Confirm</v-btn>
-       </v-form>
-    </v-container>
+    <Head title="Edit Banner" />
+    <AdminLayout>
+        <v-container fluid dark>
+            <v-form @submit.prevent="updateBanner">
+                    <v-text-field v-model="name" label="name"></v-text-field>
+                    <v-text-field v-model="patch" label="patch"></v-text-field>
+                    <v-row>
+                        <v-col> 
+                            <v-text-field dark show-adjacent-months v-model="start_date" label="Start Date"></v-text-field>
+                        </v-col>
+                        <v-col>
+                            <v-text-field dark show-adjacent-months v-model="end_date" label="End Date"></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-autocomplete 
+                        chips 
+                        multiple 
+                        label="Characters" 
+                        v-model="featured" 
+                        :items="characters" 
+                        item-title="name" 
+                        item-value="id"
+                    ></v-autocomplete>
+                    <v-btn type="submit">Confirm</v-btn>
+            </v-form>
+        </v-container>
+    </AdminLayout>
 </template>
 
 <style>

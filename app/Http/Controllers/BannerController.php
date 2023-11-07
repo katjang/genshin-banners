@@ -22,6 +22,7 @@ class BannerController extends Controller
             'patch' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
+            'featured' => 'required|array'
         ]);
 
         $banner = Banner::create([
@@ -30,6 +31,8 @@ class BannerController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date
         ]);
+
+        $banner->featured()->sync($request->featured);
 
         return to_route('banner.create');
     }
@@ -48,11 +51,13 @@ class BannerController extends Controller
             'patch' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
+            'featured' => 'required|array'
         ]);
 
-        $banner->fill($request->all());
+        $banner->fill($request->except('featured'));
+        $banner->featured()->sync($request->featured);
         $banner->save();
 
-        return back();
+        return to_route('character.create')->with('message', 'succesfully updated');
     }
 }

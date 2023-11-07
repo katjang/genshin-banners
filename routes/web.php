@@ -27,16 +27,17 @@ Route::get('/', function () {
 });
 
 // ---------------------ADMIN-----------------------------
-Route::get('/createbanner', [BannerController::class, 'create'])->name('banner.create');
-Route::get('/createcharacter', function () {
-    return Inertia::render('CreateCharacter');
-})->name('character.create');
+Route::get('/banners/create', [BannerController::class, 'create'])->name('banner.create');
+Route::get('/characters/create', [CharacterController::class, 'create'])->name('character.create');
 
 Route::post('/characters', [CharacterController::class, 'store'])->name('character.store');
 Route::post('/banners', [BannerController::class, 'store'])->name('banner.store');
 
 Route::get('/banners/{banner}', [BannerController::class, 'edit'])->name('banner.edit');
 Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banner.update');
+
+Route::get('/characters/{character}', [CharacterController::class, 'edit'])->name('character.edit');
+Route::put('/characters/{character}', [CharacterController::class, 'update'])->name('character.update');
 // ---------------------ADMIN-----------------------------
 
 Route::get('/dashboard', function () {
