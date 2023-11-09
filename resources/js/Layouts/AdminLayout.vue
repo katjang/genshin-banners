@@ -8,13 +8,12 @@ const snackbar = ref(usePage().props.flash.message != undefined);
 
 <template>
     <div>
-        <header class="bg-white dark:bg-gray-800 shadow" v-if="$slots.header">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <slot name="header" />
-            </div>
-        </header>
+        <v-toolbar title="Admin dashboard" color="purple">
+            <v-btn variant="outlined" class="mx-2" :href="route('character.create')">Add Character</v-btn>
+            <v-btn variant="outlined" class="mx-2" :href="route('banner.create')">Add Banner</v-btn>
+        </v-toolbar>
         <!-- Page Content -->
-        <main>
+        <main theme="dark">
             <slot />
             <v-snackbar v-model="snackbar">
                 {{ $page.props.flash.message }}
@@ -25,7 +24,7 @@ const snackbar = ref(usePage().props.flash.message != undefined);
                         variant="text"
                         @click="snackbar = false"
                     >
-                    Close
+                        Close
                     </v-btn>
                 </template>
         </v-snackbar>

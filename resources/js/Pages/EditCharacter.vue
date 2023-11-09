@@ -41,7 +41,7 @@ function storeCharacter() {
                 <v-text-field v-model="name" label="name"></v-text-field>
                 <v-select v-model="rarity" label="rarity" :items="[3,4,5]"></v-select>
                 <v-select v-model="weapon_type" label="Weapon Type" :items="[0,1,2,3,4,5,6]"></v-select>
-                <v-btn type="submit">Add</v-btn>
+                <v-btn type="submit">Confirm</v-btn>
         </v-form>
         </v-container>
     </AdminLayout>

@@ -27,22 +27,27 @@ Route::get('/', function () {
 });
 
 // ---------------------ADMIN-----------------------------
-Route::get('/banners/create', [BannerController::class, 'create'])->name('banner.create');
-Route::get('/characters/create', [CharacterController::class, 'create'])->name('character.create');
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard', [
+            'characters' => Character::all(),
+            'banners' => Banner::with('featured')->get()
+        ]);
+    })->name('admin.home');
+    Route::get('/banners/create', [BannerController::class, 'create'])->name('banner.create');
+    Route::get('/characters/create', [CharacterController::class, 'create'])->name('character.create');
 
-Route::post('/characters', [CharacterController::class, 'store'])->name('character.store');
-Route::post('/banners', [BannerController::class, 'store'])->name('banner.store');
+    Route::post('/characters', [CharacterController::class, 'store'])->name('character.store');
+    Route::post('/banners', [BannerController::class, 'store'])->name('banner.store');
 
-Route::get('/banners/{banner}', [BannerController::class, 'edit'])->name('banner.edit');
-Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banner.update');
+    Route::get('/banners/{banner}', [BannerController::class, 'edit'])->name('banner.edit');
+    Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banner.update');
 
-Route::get('/characters/{character}', [CharacterController::class, 'edit'])->name('character.edit');
-Route::put('/characters/{character}', [CharacterController::class, 'update'])->name('character.update');
+    Route::get('/characters/{character}', [CharacterController::class, 'edit'])->name('character.edit');
+    Route::put('/characters/{character}', [CharacterController::class, 'update'])->name('character.update');
+});
+
 // ---------------------ADMIN-----------------------------
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

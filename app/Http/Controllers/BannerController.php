@@ -34,7 +34,7 @@ class BannerController extends Controller
 
         $banner->featured()->sync($request->featured);
 
-        return to_route('banner.create');
+        return to_route('admin.home')->with('message', 'succesfully created banner');
     }
 
     public function edit(Request $request, Banner $banner) {
@@ -58,6 +58,6 @@ class BannerController extends Controller
         $banner->featured()->sync($request->featured);
         $banner->save();
 
-        return to_route('character.create')->with('message', 'succesfully updated');
+        return to_route('admin.home')->with('message', 'succesfully updated banner');
     }
 }

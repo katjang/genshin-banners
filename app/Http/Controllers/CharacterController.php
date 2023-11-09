@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Character;
+use Inertia\Inertia;
 
 class CharacterController extends Controller
 {
     public function create() {
-        return Inertia::render('CreateCharacter');
+        return Inertia::render('EditCharacter');
     }
 
     public function edit(Request $request, Character $character) {
-        return Inertia::render('CreateCharacter', [
+        return Inertia::render('EditCharacter', [
             'character' => $character
         ]);
     }
@@ -30,7 +31,7 @@ class CharacterController extends Controller
             'weapon_type' => $request->weapon_type
         ]);
 
-        return to_route('character.create');
+        return to_route('admin.home')->with('message', 'succesfully created character');;
     }
 
     public function update(Request $request, Character $character) {
@@ -43,6 +44,6 @@ class CharacterController extends Controller
         $character->fill($request->all());
         $character->save();
 
-        return to_route('character.create')->with('message', 'succesfully updated');
+        return to_route('admin.home')->with('message', 'succesfully updated character');
     }
 }

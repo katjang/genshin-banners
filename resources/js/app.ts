@@ -26,7 +26,11 @@ createInertiaApp({
                 aliases, 
                 sets: {
                     mdi,
-                }} 
+                }
+            },
+            theme: {
+                defaultTheme: 'dark'
+            }
             });
 
         createApp({ render: () => h(App, props) })
