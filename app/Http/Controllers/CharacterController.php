@@ -31,7 +31,7 @@ class CharacterController extends Controller
             'weapon_type' => $request->weapon_type
         ]);
 
-        return to_route('admin.home')->with('message', 'succesfully created character');;
+        return to_route('dashboard')->with('message', 'succesfully created character');;
     }
 
     public function update(Request $request, Character $character) {
@@ -44,6 +44,11 @@ class CharacterController extends Controller
         $character->fill($request->all());
         $character->save();
 
-        return to_route('admin.home')->with('message', 'succesfully updated character');
+        return to_route('dashboard')->with('message', 'succesfully updated character');
+    }
+
+    public function delete(Request $request, Character $character) {
+        $character->delete();
+        return to_route('dashboard')->with('message', 'succesfully deleted character');
     }
 }

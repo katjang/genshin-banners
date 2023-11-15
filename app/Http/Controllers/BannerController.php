@@ -34,7 +34,7 @@ class BannerController extends Controller
 
         $banner->featured()->sync($request->featured);
 
-        return to_route('admin.home')->with('message', 'succesfully created banner');
+        return to_route('dashboard')->with('message', 'succesfully created banner');
     }
 
     public function edit(Request $request, Banner $banner) {
@@ -58,6 +58,11 @@ class BannerController extends Controller
         $banner->featured()->sync($request->featured);
         $banner->save();
 
-        return to_route('admin.home')->with('message', 'succesfully updated banner');
+        return to_route('dashboard')->with('message', 'succesfully updated banner');
+    }
+
+    public function delete(Request $request, Banner $banner) {
+        $banner->delete();
+        return to_route('dashboard')->with('message', 'succesfully deleted banner');
     }
 }
