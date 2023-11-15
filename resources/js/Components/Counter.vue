@@ -18,7 +18,7 @@ let timer = countdown(props.start_date, (ts: any) => {
     hours.value = ts.hours;
     minutes.value = ts.minutes;
     seconds.value = ts.seconds;
-}, [countdown.MONTHS, countdown.DAYS, countdown.HOURS, countdown.MINUTES, countdown.SECONDS]);
+}, countdown.MONTHS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
 
 function pad(num: number, size: number): string {
     var s = "00000" + num;
