@@ -7,8 +7,6 @@ defineProps<{
     characters: Character[];
 }>();
 
-const end_date = new Date('2023-04-02');
-
 </script>
 
 <template dark>
@@ -60,12 +58,9 @@ const end_date = new Date('2023-04-02');
                                     </v-card-subtitle>
                                 </v-card-item>
                                 <v-card-text class="z-1 flex-grow-0">
-                                    <!-- <Counter 
-                                        :start_date="character.last_banner.end_date"
-                                    /> -->
-                                    <v-sheet dark rounded>
+                                    <v-sheet dark rounded v-if="character.last_banner">
                                         <Counter 
-                                            :start_date="end_date"
+                                            :start_date="new Date(character.last_banner.end_date)"
                                         />
                                     </v-sheet>
                                 </v-card-text>
