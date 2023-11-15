@@ -16,7 +16,7 @@ class Character extends Model
 
     public function banners(): belongsToMany
     {
-        return $this->belongsToMany(Banner::class);
+        return $this->belongsToMany(Banner::class)->orderBy('end_date', 'DESC');
     }
 
     protected function getLastBannerAttribute() {

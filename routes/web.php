@@ -29,6 +29,11 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/characters/{character}', function (Character $character) {
+    $ret = Character::with('banners', 'banners.featured')->where('id', $character->id)->first();
+    return $ret;
+});
+
 // ---------------------ADMIN-----------------------------
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {

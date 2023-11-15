@@ -5,6 +5,7 @@ export class Character {
     weapon_type!: WeaponType;
     element!: Element;
     last_banner?: Banner;
+    banners?: Banner[];
 }
 
 export enum WeaponType {
@@ -29,7 +30,7 @@ export class Banner {
     id!: number;
     name!: string;
     patch!: string;
-    featured!: Character[];
+    featured?: Character[];
     start_date!: Date;
     end_date!: Date;
 }
