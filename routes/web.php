@@ -22,6 +22,9 @@ use App\Models\Banner;
 
 Route::get('/', function () {
     return Inertia::render('Overview', [
+        'characters' => Character::all()->append('last_banner')
+    ]);
+});
         'characters' => Character::all(),
     ]);
 });

@@ -19,9 +19,7 @@ class Character extends Model
         return $this->belongsToMany(Banner::class);
     }
 
-    protected function lastBanner(): Attribute {
-        return Attribute::make(
-            get: fn () => $this->banners()->last()->get()
-        );
+    protected function getLastBannerAttribute() {
+        return $this->banners()->orderBy('end_date', 'ASC')->first();
     }
 }
