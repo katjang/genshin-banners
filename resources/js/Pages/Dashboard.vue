@@ -16,7 +16,55 @@ defineProps<{
 
     <AdminLayout>
         <v-container>
-            <h3 class="text-h3">Characters</h3>
+            <h3 class="text-h3 mt-6">Banners</h3>
+            <v-table density="compact">
+                <thead>
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            Featured
+                        </td>
+                        <td>
+                            Patch
+                        </td>
+                        <td>
+                            start_date
+                        </td>
+                        <td>
+                            end_date
+                        </td>
+                        <td>
+                            Actions
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="banner in banners" :key="banner.id">
+                        <td>
+                            {{ banner.name }}
+                        </td>
+                        <td>
+                            <v-chip density="compact" v-for="feature in banner.featured" :key="feature.id">{{ feature.name }}</v-chip>
+                        </td>
+                        <td>
+                            {{ banner.patch }}
+                        </td>
+                        <td>
+                            {{ banner.start_date }}
+                        </td>
+                        <td>
+                            {{ banner.end_date }}
+                        </td>
+                        <td>
+                            <v-btn density="compact" :href="route('banner.edit', banner.id)" class="mr-2">Edit</v-btn>
+                            <v-btn density="compact" :href="route('banner.edit', banner.id)" class="ml-2">Delete</v-btn>
+                        </td>
+                    </tr>
+                </tbody>
+            </v-table>
+            <h3 class="text-h3 mt-6">Characters</h3>
             <v-table density="compact">
                 <thead>
                     <tr>
@@ -46,49 +94,12 @@ defineProps<{
                             {{ character.rarity }}
                         </td>
                         <td>
-                            <v-btn density="compact" :href="route('character.edit', character.id)" class="mx-2">Edit</v-btn>
-                            <!-- <v-btn density="compact" :href="route('character.delete', character.id)" class="mx-2">Delete</v-btn> -->
-                        </td>
-                    </tr>
-                </tbody>
-            </v-table>
-            <h3 class="text-h3 mt-6">Banners</h3>
-            <v-table density="compact">
-                <thead>
-                    <tr>
-                        <td>
-                            Name
-                        </td>
-                        <td>
-                            Featured
-                        </td>
-                        <td>
-                            Patch
-                        </td>
-                        <td>
-                            Actions
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="banner in banners" :key="banner.id">
-                        <td>
-                            {{ banner.name }}
-                        </td>
-                        <td>
-                            <v-chip density="compact" v-for="feature in banner.featured" :key="feature.id">{{ feature.name }}</v-chip>
-                        </td>
-                        <td>
-                            {{ banner.patch }}
-                        </td>
-                        <td>
-                            <v-btn density="compact" :href="route('banner.edit', banner.id)" class="mx-2">Edit</v-btn>
-                            <v-btn density="compact" :href="route('banner.edit', banner.id)" class="mx-2">Delete</v-btn>
+                            <v-btn density="compact" :href="route('character.edit', character.id)" class="mr-2">Edit</v-btn>
+                            <v-btn density="compact" :href="route('character.delete', character.id)" class="ml-2">Delete</v-btn>
                         </td>
                     </tr>
                 </tbody>
             </v-table>
         </v-container>
-
     </AdminLayout>
 </template>
