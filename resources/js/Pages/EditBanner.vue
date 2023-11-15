@@ -20,7 +20,7 @@ const end_date = ref(props.banner? props.banner.end_date : '');
 
 function updateBanner() {
     if(id) {
-       router.put('/banners/'+id, {
+       router.put('/admin/banners/'+id, {
             name: name.value, 
             patch: patch.value,
             start_date: start_date.value, 
@@ -28,7 +28,7 @@ function updateBanner() {
             featured: featured.value,
        });
     } else {
-        router.post('/banners', {
+        router.post('/admin/banners', {
             name: name.value, 
             patch: patch.value,
             start_date: start_date.value, 
