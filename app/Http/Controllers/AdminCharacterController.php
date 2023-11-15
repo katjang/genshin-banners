@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Character;
 use Inertia\Inertia;
 
-class CharacterController extends Controller
+class AdminCharacterController extends Controller
 {
     public function create() {
-        return Inertia::render('EditCharacter');
+        return Inertia::render('Admin/EditCharacter');
     }
 
     public function edit(Request $request, Character $character) {
-        return Inertia::render('EditCharacter', [
+        return Inertia::render('Admin/EditCharacter', [
             'character' => $character
         ]);
     }

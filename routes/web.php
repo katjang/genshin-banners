@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CharacterController;
-use App\Http\Controllers\BannerController;
+use App\Http\Controllers\AdminCharacterController;
+use App\Http\Controllers\AdminBannerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,13 +32,13 @@ Route::get('/', function () {
 // ---------------------ADMIN-----------------------------
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
-        return Inertia::render('Dashboard', [
+        return Inertia::render('Admin/Dashboard', [
             'characters' => Character::all(),
             'banners' => Banner::with('featured')->orderBy('start_date', 'DESC')->get()
         ]);
     })->name('dashboard');
 
-    Route::name('banner.')->controller(BannerController::class)->group(function() {
+    Route::name('banner.')->controller(AdminBannerController::class)->group(function() {
         Route::get('/banners/create', 'create')->name('create');
         Route::get('/banners/{banner}', 'edit')->name('edit');
         Route::post('/banners', 'store')->name('store');
@@ -46,7 +46,7 @@ Route::prefix('admin')->group(function () {
         Route::delete('/banners/{banner}', 'delete')->name('delete');
     });
 
-    Route::name('character.')->controller(CharacterController::class)->group(function() {
+    Route::name('character.')->controller(AdminCharacterController::class)->group(function() {
         Route::get('/characters/create', 'create')->name('create');
         Route::get('/characters/{character}', 'edit')->name('edit');
         Route::post('/characters', 'store')->name('store');
