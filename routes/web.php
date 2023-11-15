@@ -31,20 +31,25 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard', [
             'characters' => Character::all(),
-            'banners' => Banner::with('featured')->get()
+            'banners' => Banner::with('featured')->orderBy('start_date', 'DESC')->get()
         ]);
-    })->name('admin.home');
-    Route::get('/banners/create', [BannerController::class, 'create'])->name('banner.create');
-    Route::get('/characters/create', [CharacterController::class, 'create'])->name('character.create');
+    })->name('dashboard');
 
-    Route::post('/characters', [CharacterController::class, 'store'])->name('character.store');
-    Route::post('/banners', [BannerController::class, 'store'])->name('banner.store');
+    Route::name('banner.')->controller(BannerController::class)->group(function() {
+        Route::get('/banners/create', 'create')->name('create');
+        Route::get('/banners/{banner}', 'edit')->name('edit');
+        Route::post('/banners', 'store')->name('store');
+        Route::put('/banners/{banner}', 'update')->name('update');
+        Route::delete('/banners/{banner}', 'delete')->name('delete');
+    });
 
-    Route::get('/banners/{banner}', [BannerController::class, 'edit'])->name('banner.edit');
-    Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banner.update');
-
-    Route::get('/characters/{character}', [CharacterController::class, 'edit'])->name('character.edit');
-    Route::put('/characters/{character}', [CharacterController::class, 'update'])->name('character.update');
+    Route::name('character.')->controller(CharacterController::class)->group(function() {
+        Route::get('/characters/create', 'create')->name('create');
+        Route::get('/characters/{character}', 'edit')->name('edit');
+        Route::post('/characters', 'store')->name('store');
+        Route::put('/characters/{character}', 'update')->name('update');
+        Route::delete('/characters/{characters}', 'delete')->name('delete');
+    });
 });
 
 // ---------------------ADMIN-----------------------------
