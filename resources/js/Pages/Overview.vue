@@ -5,12 +5,21 @@ import CharacterVue from '@/Components/Character.vue';
 import { Character } from '@/models';
 import { ref } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     characters: Character[];
 }>();
 
 const dialog = ref(false);
 const selectedCharacter = ref();
+const elementFilter = ref();
+const weaponFilter = ref();
+const rarityFilter = ref();
+const filteredCharacters = ref();
+
+filteredCharacters.value = props.characters;
+elementFilter.value = [];
+weaponFilter.value = [];
+rarityFilter.value = [];
 
 async function characterDetails(id: number) {
     dialog.value = false;
@@ -32,6 +41,23 @@ async function characterDetails(id: number) {
     selectedCharacter.value = result;
 }
 
+function filter() {
+    let tmpFilter = props.characters;
+    if(elementFilter.value.length) {
+        tmpFilter = props.characters.filter(c => elementFilter.value.indexOf(c.element) > -1);
+    }
+
+    if(weaponFilter.value.length) {
+        tmpFilter = tmpFilter.filter(c => weaponFilter.value.indexOf(c.weapon_type) > -1);
+    }
+
+    if(rarityFilter.value.length) {
+        tmpFilter = tmpFilter.filter(c => rarityFilter.value.indexOf(c.rarity) > -1);
+    }
+
+    filteredCharacters.value = tmpFilter;
+}
+
 </script>
 
 <template dark>
@@ -46,9 +72,122 @@ async function characterDetails(id: number) {
             </v-sheet>
         </template>
     </v-dialog>
+    <v-toolbar :height="$vuetify.display.smAndDown? 140 : 100">
+        <v-container>
+            <v-row dense>
+                <v-col class="justify-center justify-md-start d-flex">
+                    <v-btn-toggle 
+                        v-model="elementFilter" 
+                        multiple
+                        @update:modelValue="filter"
+                        density="compact"
+                    >
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/elements/0.svg`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/elements/1.svg`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/elements/2.svg`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/elements/3.svg`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/elements/4.svg`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/elements/5.svg`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/elements/6.svg`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                    </v-btn-toggle>
+                </v-col>
+                <!-- <v-col>
+                    <v-text-field density="compact" hide-details variant="solo" label="Search..." clearable></v-text-field>
+                </v-col> -->
+            </v-row>
+            <v-row dense class="flex-column flex-md-row">
+                <v-col class="justify-center justify-md-start d-flex">
+                    <v-btn-toggle 
+                        v-model="weaponFilter" 
+                        multiple
+                        @update:modelValue="filter"
+                        density="compact"
+                    >
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/weapon_types/0.png`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/weapon_types/1.png`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/weapon_types/2.png`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/weapon_types/3.png`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                        <v-btn>
+                            <v-icon size="28">
+                                <v-img :src="`/images/icons/weapon_types/4.png`"></v-img>
+                            </v-icon>
+                        </v-btn>
+                    </v-btn-toggle>
+                </v-col>
+                <v-col class="justify-center justify-md-start d-flex">
+                    <v-btn-toggle 
+                        v-model="rarityFilter" 
+                        multiple
+                        @update:modelValue="filter"
+                        density="compact"
+                    >
+                        <v-btn :value="3">
+                            <v-icon size="28">
+                                <img :src="`/images/icons/rarity/3.png`">
+                            </v-icon>
+                        </v-btn>
+                        <v-btn :value="4">
+                            <v-icon size="28">
+                                <img :src="`/images/icons/rarity/4.png`">
+                            </v-icon>
+                        </v-btn>
+                        <v-btn :value="5">
+                            <v-icon size="28">
+                                <img :src="`/images/icons/rarity/5.png`">
+                            </v-icon>
+                        </v-btn>
+                    </v-btn-toggle>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-toolbar>
     <v-container fluid>
         <v-row>
-            <v-col xs="6" sm="4" md="3" lg="2" v-for="character in characters">
+            <v-col cols="6" sm="4" md="3" lg="2" v-for="character in filteredCharacters" :key="character.id">
                 <v-hover>
                     <template v-slot:default="{ isHovering, props }">
                         <v-card theme="dark" height="250" v-bind="props" @click="characterDetails(character.id)">
@@ -88,7 +227,10 @@ async function characterDetails(id: number) {
                                     <v-card-subtitle>
                                         <img :src="`/images/icons/rarity/` + character.rarity + `.png`">
                                         <div class="absolute top-2 right-2">
-                                            <v-img :src="`/images/icons/weapon_types/` + character.weapon_type + `.png`" width="40"></v-img>
+                                            <v-img 
+                                                :src="`/images/icons/weapon_types/` + character.weapon_type + `.png`" 
+                                                width="40">
+                                            </v-img>
                                         </div>
                                     </v-card-subtitle>
                                 </v-card-item>
@@ -105,7 +247,6 @@ async function characterDetails(id: number) {
                     </template>
                 </v-hover>
             </v-col>
-            {{ characters }}
         </v-row>
     </v-container>
 </template>
