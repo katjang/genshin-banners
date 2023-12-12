@@ -25,9 +25,6 @@ Route::get('/', function () {
         'characters' => Character::all()->append('last_banner')
     ]);
 });
-        'characters' => Character::all(),
-    ]);
-});
 
 Route::get('/characters/{character}', function (Character $character) {
     $ret = Character::with('banners', 'banners.featured')->where('id', $character->id)->first();
