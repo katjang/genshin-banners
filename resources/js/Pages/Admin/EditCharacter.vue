@@ -17,13 +17,13 @@ const weapon_type = ref(props.character? props.character.weapon_type : 0);
 
 function storeCharacter() {
     if(id) {
-        router.put('/character/'+id, {
+        router.put('/admin/character/'+id, {
             name: name.value, 
             rarity: rarity.value, 
             weapon_type: weapon_type.value
         })
     } else {
-        router.post('/characters', {
+        router.post('/admin/characters', {
             name: name.value, 
             rarity: rarity.value, 
             weapon_type: weapon_type.value
