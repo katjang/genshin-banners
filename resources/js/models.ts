@@ -23,7 +23,7 @@ export enum Element {
     ELECTRO,
     CRYO,
     DENDRO,
-    Hydro,
+    HYDRO,
 }
 
 export class Banner {
