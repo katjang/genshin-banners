@@ -31,7 +31,7 @@ function pad(num: number, size: number): string {
 <template>
     <div>
         <div v-if="row">
-            {{ months }} Months, {{ days }} Days, {{ pad(hours,2) }}:{{ pad(minutes,2) }}:{{ pad(seconds,2) }}
+            <template v-if="months > 0">{{ months }} Months, </template><template v-if="days > 0">{{ days }} Days, </template>{{ pad(hours,2) }}:{{ pad(minutes,2) }}:{{ pad(seconds,2) }}
         </div>
         <div v-else>
             <v-row justify="center" class="text-body-1 font-weight-bold" no-gutters>
