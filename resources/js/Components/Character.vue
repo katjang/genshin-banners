@@ -1,11 +1,23 @@
 <script setup lang="ts">
-import { Character } from '@/models';
+import { Banner, Character } from '@/models';
 import { WeaponType } from '@/models';
 import Counter from '@/Components/Counter.vue';
 
-defineProps<{
+const props = defineProps<{
     character: Character,
 }>();
+
+let banners: {[key: string]: Banner[]} = {};
+
+if(props.character.banners != undefined) {
+    banners = props.character.banners.reduce((group: {[key: string]: Banner[]}, banner) => {
+        const { end_date } = banner;
+        group[end_date.toString()] = group[end_date.toString()] ?? [];
+        group[end_date.toString()].push(banner);
+        return group;
+    }, {});
+}
+
 </script>
 
 <template>
@@ -44,22 +56,30 @@ defineProps<{
         </v-card-subtitle>
         
         <v-timeline>
-            <v-timeline-item v-for="banner in character.banners" :key="banner.id">
-                <template v-slot:icon v-if="banner.featured">
+            <v-timeline-item v-for="bannerPeriod in banners" :key="bannerPeriod[0].id">
+                <template v-slot:icon v-if="bannerPeriod.length == 1 && bannerPeriod[0].featured">
                     <v-icon>
-                        <v-avatar size="60" color="white" :image="`/images/portraits/` + banner.featured[0].name.replace(' ', '_') + `_Icon.png`"></v-avatar>
+                        <v-avatar size="60" color="white" :image="`/images/portraits/` + bannerPeriod[0].featured[0].name.replace(' ', '_') + `_Icon.png`"></v-avatar>
+                    </v-icon>
+                </template>
+                <template v-slot:icon v-if="bannerPeriod.length == 2 && bannerPeriod[0].featured && bannerPeriod[1].featured">
+                    <v-icon>
+                        <v-avatar size="60" color="white">
+                            <img style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; clip-path: view-box polygon(0% 0%, 0% 100%, 50% 100%, 50% 0);" :src="`/images/portraits/` + bannerPeriod[0].featured[0].name.replace(' ', '_') + `_Icon.png`">
+                            <img style="position absolute; left: 50%; top: 0; width: 100%; height: 100%; clip-path: view-box polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);" :src="`/images/portraits/` + bannerPeriod[1].featured[0].name.replace(' ', '_') + `_Icon.png`">
+                        </v-avatar>
                     </v-icon>
                 </template>
                 <template v-slot:opposite>
                     <v-chip pill class="mr-1">
-                        {{ new Date(banner.start_date).toLocaleString('en-us',{month:'long', year:'numeric', day: 'numeric'}) }}
+                        {{ new Date(bannerPeriod[0].start_date).toLocaleString('en-us',{month:'long', year:'numeric', day: 'numeric'}) }}
                     </v-chip>
                     <v-icon icon="mdi-calendar-collapse-horizontal"></v-icon>
                     <v-chip pill class="ml-1">
-                        {{ new Date(banner.end_date).toLocaleString('en-us',{month:'long', year:'numeric', day: 'numeric'}) }}
+                        {{ new Date(bannerPeriod[0].end_date).toLocaleString('en-us',{month:'long', year:'numeric', day: 'numeric'}) }}
                     </v-chip>
                 </template>
-                <v-card>
+                <v-card v-for="(banner, key) in bannerPeriod">
                     <v-card-title class="text-h6">
                         {{ banner.name }}
                     </v-card-title>
