@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { Banner, Character } from '@/models';
 import { WeaponType } from '@/models';
 import { getBannerName } from '@/helpers';
@@ -9,6 +9,14 @@ defineProps<{
     banners: Banner[],
     characters: Character[],
 }>();
+
+function deleteBanner(banner: Banner) {
+    router.delete(route('banner.delete', banner.id));
+}
+
+function deleteCharacter(character: Character) {
+    router.delete(route('character.delete', character.id));
+}
 
 </script>
 
@@ -60,7 +68,7 @@ defineProps<{
                         </td>
                         <td>
                             <v-btn density="compact" :href="route('banner.edit', banner.id)" class="mr-2">Edit</v-btn>
-                            <v-btn density="compact" :href="route('banner.edit', banner.id)" class="ml-2">Delete</v-btn>
+                            <v-btn color="red" density="compact" @click.ctrl="deleteBanner(banner)" class="ml-2">Delete</v-btn>
                         </td>
                     </tr>
                 </tbody>
@@ -96,7 +104,7 @@ defineProps<{
                         </td>
                         <td>
                             <v-btn density="compact" :href="route('character.edit', character.id)" class="mr-2">Edit</v-btn>
-                            <v-btn density="compact" :href="route('character.delete', character.id)" class="ml-2">Delete</v-btn>
+                            <v-btn color="red" density="compact" @click.ctrl="deleteCharacter(character)" class="ml-2">Delete</v-btn>
                         </td>
                     </tr>
                 </tbody>
