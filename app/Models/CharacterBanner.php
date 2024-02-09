@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\Character;
 
-class Banner extends Model
+class CharacterBanner extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,6 @@ class Banner extends Model
 
     public function featured(): BelongsToMany
     {
-        return $this->BelongsToMany(Character::class);
+        return $this->BelongsToMany(Character::class, 'character_feature');
     }
 }

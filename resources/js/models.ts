@@ -5,8 +5,9 @@ export class Character {
     weapon_type!: WeaponType;
     element!: Element;
     featured_name?: string;
-    last_banner?: Banner;
-    banners?: Banner[];
+    last_banner?: CharacterBanner;
+    banners?: CharacterBanner[];
+}
 }
 
 export enum WeaponType {
@@ -27,7 +28,7 @@ export enum Element {
     HYDRO,
 }
 
-export class Banner {
+export class CharacterBanner {
     id!: number;
     name!: string;
     patch!: string;

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { Banner, Character } from '@/models';
+import { CharacterBanner, Character } from '@/models';
 import { WeaponType } from '@/models';
 import Counter from '@/Components/Counter.vue';
-import { getBannerName } from '@/helpers';
+import { getCharacterBannerName } from '@/helpers';
 
 const props = defineProps<{
     character: Character,
 }>();
 
-let banners: {[key: string]: Banner[]} = {};
+let banners: {[key: string]: CharacterBanner[]} = {};
 
 if(props.character.banners != undefined) {
-    banners = props.character.banners.reduce((group: {[key: string]: Banner[]}, banner) => {
+    banners = props.character.banners.reduce((group: {[key: string]: CharacterBanner[]}, banner) => {
         const { end_date } = banner;
         group[end_date.toString()] = group[end_date.toString()] ?? [];
         group[end_date.toString()].push(banner);
@@ -82,7 +82,7 @@ if(props.character.banners != undefined) {
                 </template>
                 <v-card v-for="(banner, key) in bannerPeriod">
                     <v-card-title class="text-h6">
-                        {{ getBannerName(banner) }}
+                        {{ getCharacterBannerName(banner) }}
                     </v-card-title>
                     <v-card-text class="bg-white text--primary pt-3">
                         <v-chip v-for="featured in banner.featured" class="ma-1" pill @click="$emit('click-character', featured.id)">

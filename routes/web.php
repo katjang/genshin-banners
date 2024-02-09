@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminCharacterController;
-use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminCharacterBannerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Character;
-use App\Models\Banner;
+use App\Models\CharacterBanner;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,11 +36,11 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Admin/Dashboard', [
             'characters' => Character::all(),
-            'banners' => Banner::with('featured')->orderBy('start_date', 'DESC')->get()
+            'characterBanners' => CharacterBanner::with('featured')->orderBy('start_date', 'DESC')->get()
         ]);
     })->name('dashboard');
 
-    Route::name('banner.')->controller(AdminBannerController::class)->group(function() {
+    Route::name('banner.')->controller(AdminCharacterBannerController::class)->group(function() {
         Route::get('/banners/create', 'create')->name('create');
         Route::get('/banners/{banner}', 'edit')->name('edit');
         Route::post('/banners', 'store')->name('store');

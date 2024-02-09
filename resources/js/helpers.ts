@@ -1,6 +1,6 @@
-import { Banner } from "./models";
+import { CharacterBanner } from "./models";
 
-export function getBannerName(banner: Banner) {
+export function getCharacterBannerName(banner: CharacterBanner) {
     if(banner.name) return banner.name;
 
     let featured_five_star = banner.featured.find(f => f.rarity == 5);

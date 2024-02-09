@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Banner;
+use App\Models\CharacterBanner;
 use App\Models\Character;
 use Inertia\Inertia;
 
-class AdminBannerController extends Controller
+class AdminCharacterBannerController extends Controller
 {
 
     public function create() {
@@ -16,9 +16,9 @@ class AdminBannerController extends Controller
         ]);
     }
 
-    public function edit(Request $request, Banner $banner) {
+    public function edit(Request $request, CharacterBanner $banner) {
         $banner->featured;
-        return Inertia::render('Admin/EditBanner', [
+        return Inertia::render('Admin/EditCharacterBanner', [
             'banner' => $banner,
             'characters' => Character::all(),
         ]);
@@ -32,7 +32,7 @@ class AdminBannerController extends Controller
             'featured' => 'required|array'
         ]);
 
-        $banner = Banner::create([
+        $banner = CharacterBanner::create([
             'name' => $request->name,
             'patch' => $request->patch,
             'start_date' => $request->start_date,
@@ -44,7 +44,7 @@ class AdminBannerController extends Controller
         return to_route('dashboard')->with('message', 'succesfully created banner');
     }
 
-    public function update(Request $request, Banner $banner) {
+    public function update(Request $request, CharacterBanner $banner) {
         $request->validate([
             'patch' => 'required',
             'start_date' => 'required|date',
@@ -59,7 +59,7 @@ class AdminBannerController extends Controller
         return to_route('dashboard')->with('message', 'succesfully updated banner');
     }
 
-    public function delete(Request $request, Banner $banner) {
+    public function delete(Request $request, CharacterBanner $banner) {
         $banner->delete();
         return to_route('dashboard')->with('message', 'succesfully deleted banner');
     }

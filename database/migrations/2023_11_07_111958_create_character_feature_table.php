@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banner_character', function (Blueprint $table) {
+        Schema::create('character_feature', function (Blueprint $table) {
             $table->id();
-            $table->integer('banner_id');
+            $table->integer('character_banner_id');
             $table->integer('character_id');
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banner_character');
+        Schema::dropIfExists('character_feature');
     }
 };

@@ -2,12 +2,12 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-import { Banner, Character } from '@/models';
+import { CharacterBanner, Character } from '@/models';
 
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 const props = defineProps<{
-    banner?: Banner;
+    banner?: CharacterBanner;
     characters: Character[],
 }>();
 
@@ -17,7 +17,7 @@ const featured = ref(props.banner? props.banner.featured.map(m => m.id) : []);
 const patch = ref(props.banner? props.banner.patch : '');
 const start_date = ref(props.banner? props.banner.start_date : '');
 const end_date = ref(props.banner? props.banner.end_date : '');
-const banner_name_placeholder = ref(props.banner? (props.banner.featured?.find(c => c.rarity == 5)?.featured_name) : '');
+const banner_name_placeholder = ref(props.banner? (props.banner.featured?.find((c: Character) => c.rarity == 5)?.featured_name) : '');
 if(banner_name_placeholder.value == undefined) banner_name_placeholder.value = '';
 
 function changeFeatured() {

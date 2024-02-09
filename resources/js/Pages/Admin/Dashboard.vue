@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { Banner, Character } from '@/models';
+import { CharacterBanner, Character } from '@/models';
 import { WeaponType } from '@/models';
-import { getBannerName } from '@/helpers';
+import { getCharacterBannerName } from '@/helpers';
 
 defineProps<{
-    banners: Banner[],
+    characterBanners: CharacterBanner[],
     characters: Character[],
 }>();
 
-function deleteBanner(banner: Banner) {
+function deleteCharacterBanner(banner: CharacterBanner) {
     router.delete(route('banner.delete', banner.id));
 }
 
@@ -25,7 +25,7 @@ function deleteCharacter(character: Character) {
 
     <AdminLayout>
         <v-container>
-            <h3 class="text-h3 mt-6">Banners</h3>
+            <h3 class="text-h3 mt-6">Character Banners</h3>
             <v-table density="compact">
                 <thead>
                     <tr>
@@ -50,9 +50,9 @@ function deleteCharacter(character: Character) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="banner in banners" :key="banner.id">
+                    <tr v-for="banner in characterBanners" :key="banner.id">
                         <td>
-                            {{ getBannerName(banner) }}
+                            {{ getCharacterBannerName(banner) }}
                         </td>
                         <td>
                             <v-chip density="compact" v-for="feature in banner.featured" :key="feature.id">{{ feature.name }}</v-chip>
@@ -68,7 +68,7 @@ function deleteCharacter(character: Character) {
                         </td>
                         <td>
                             <v-btn density="compact" :href="route('banner.edit', banner.id)" class="mr-2">Edit</v-btn>
-                            <v-btn color="red" density="compact" @click.ctrl="deleteBanner(banner)" class="ml-2">Delete</v-btn>
+                            <v-btn color="red" density="compact" @click.ctrl="deleteCharacterBanner(banner)" class="ml-2">Delete</v-btn>
                         </td>
                     </tr>
                 </tbody>

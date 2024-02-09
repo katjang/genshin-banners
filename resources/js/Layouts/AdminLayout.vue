@@ -12,7 +12,7 @@ const snackbar = ref(usePage().props.flash.message != undefined);
             <v-btn :href="route('dashboard')"><v-toolbar-title>Admin dashboard</v-toolbar-title></v-btn>
             <v-spacer></v-spacer>
             <v-btn variant="outlined" class="mx-2" :href="route('character.create')">Add Character</v-btn>
-            <v-btn variant="outlined" class="mx-2" :href="route('banner.create')">Add Banner</v-btn>
+            <v-btn variant="outlined" class="mx-2" :href="route('banner.create')">Add Character Banner</v-btn>
         </v-toolbar>
         <!-- Page Content -->
         <main theme="dark">
