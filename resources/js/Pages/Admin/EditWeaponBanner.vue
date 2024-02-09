@@ -2,13 +2,13 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-import { CharacterBanner, Character } from '@/models';
+import { WeaponBanner, Weapon } from '@/models';
 
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 const props = defineProps<{
-    banner?: CharacterBanner;
-    characters: Character[],
+    banner?: WeaponBanner;
+    weapons: Weapon[],
 }>();
 
 const id = props.banner? props.banner.id : undefined;
@@ -17,17 +17,6 @@ const featured = ref(props.banner? props.banner.featured.map(m => m.id) : []);
 const patch = ref(props.banner? props.banner.patch : '');
 const start_date = ref(props.banner? props.banner.start_date : '');
 const end_date = ref(props.banner? props.banner.end_date : '');
-const banner_name_placeholder = ref(props.banner? (props.banner.featured?.find((c: Character) => c.rarity == 5)?.featured_name) : '');
-if(banner_name_placeholder.value == undefined) banner_name_placeholder.value = '';
-
-function changeFeatured() {
-    let featured_characters = props.characters.filter(c => featured.value.indexOf(c.id) > -1);
-    let featured_five_star = featured_characters.find(c => c.rarity == 5);
-
-    if(featured_five_star) {
-        banner_name_placeholder.value = featured_five_star.featured_name? featured_five_star.featured_name : '';
-    }
-}
 
 function updateBanner() {
     let object = {
@@ -38,9 +27,9 @@ function updateBanner() {
         featured: featured.value,
     };
     if(id) {
-        router.put(route('characterBanner.update', id), object);
+        router.put(route('weaponBanner.update', id), object);
     } else {
-        router.post(route('characterBanner.store'), object);
+        router.post(route('weaponBanner.store'), object);
     }
 }
 
@@ -51,7 +40,7 @@ function updateBanner() {
     <AdminLayout>
         <v-container fluid dark>
             <v-form @submit.prevent="updateBanner">
-                    <v-text-field persistent-placeholder :placeholder="banner_name_placeholder" v-model="name" label="name"></v-text-field>
+                    <v-text-field v-model="name" label="name"></v-text-field>
                     <v-text-field v-model="patch" label="patch"></v-text-field>
                     <v-row>
                         <v-col> 
@@ -64,12 +53,11 @@ function updateBanner() {
                     <v-autocomplete 
                         chips 
                         multiple 
-                        label="Characters" 
+                        label="Weapons" 
                         v-model="featured" 
-                        :items="characters" 
+                        :items="weapons" 
                         item-title="name" 
                         item-value="id"
-                        @update:modelValue="changeFeatured"
                     ></v-autocomplete>
                     <v-btn type="submit">Confirm</v-btn>
             </v-form>

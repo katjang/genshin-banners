@@ -3,11 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminCharacterController;
 use App\Http\Controllers\AdminCharacterBannerController;
+use App\Http\Controllers\AdminWeaponController;
+use App\Http\Controllers\AdminWeaponBannerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Character;
 use App\Models\CharacterBanner;
+use App\Models\Weapon;
+use App\Models\WeaponBanner;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +40,27 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Admin/Dashboard', [
             'characters' => Character::all(),
-            'characterBanners' => CharacterBanner::with('featured')->orderBy('start_date', 'DESC')->get()
+            'characterBanners' => CharacterBanner::with('featured')->orderBy('start_date', 'DESC')->get(),
+            'weapons' => Weapon::all(),
+            'weaponBanners' => WeaponBanner::with('featured')->orderBy('start_date', 'DESC')->get(),
         ]);
     })->name('dashboard');
+
+    Route::name('weapon.')->controller(AdminWeaponController::class)->group(function() {
+        Route::get('/weapons/create', 'create')->name('create');
+        Route::get('/weapons/{weapon}', 'edit')->name('edit');
+        Route::post('/weapons', 'store')->name('store');
+        Route::put('/weapons/{weapon}', 'update')->name('update');
+        Route::delete('/weapons/{weapon}', 'delete')->name('delete');
+    });
+
+    Route::name('character.')->controller(AdminCharacterController::class)->group(function() {
+        Route::get('/characters/create', 'create')->name('create');
+        Route::get('/characters/{character}', 'edit')->name('edit');
+        Route::post('/characters', 'store')->name('store');
+        Route::put('/characters/{character}', 'update')->name('update');
+        Route::delete('/characters/{character}', 'delete')->name('delete');
+    });
 
     Route::name('characterBanner.')->controller(AdminCharacterBannerController::class)->group(function() {
         Route::get('/characterBanners/create', 'create')->name('create');
@@ -47,14 +69,13 @@ Route::prefix('admin')->group(function () {
         Route::put('/characterBanners/{banner}', 'update')->name('update');
         Route::delete('/characterBanners/{banner}', 'delete')->name('delete');
     });
-    });
 
-    Route::name('character.')->controller(AdminCharacterController::class)->group(function() {
-        Route::get('/characters/create', 'create')->name('create');
-        Route::get('/characters/{character}', 'edit')->name('edit');
-        Route::post('/characters', 'store')->name('store');
-        Route::put('/characters/{character}', 'update')->name('update');
-        Route::delete('/characters/{characters}', 'delete')->name('delete');
+    Route::name('weaponBanner.')->controller(AdminWeaponBannerController::class)->group(function() {
+        Route::get('/weaponBanners/create', 'create')->name('create');
+        Route::get('/weaponBanners/{banner}', 'edit')->name('edit');
+        Route::post('/weaponBanners', 'store')->name('store');
+        Route::put('/weaponBanners/{banner}', 'update')->name('update');
+        Route::delete('/weaponBanners/{banner}', 'delete')->name('delete');
     });
 });
 

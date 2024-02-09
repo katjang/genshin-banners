@@ -4,11 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use App\Models\CharacterBanner;
 
-class Character extends Model
+class Weapon extends Model
 {
     use HasFactory;
 
@@ -16,7 +13,7 @@ class Character extends Model
 
     public function banners(): belongsToMany
     {
-        return $this->belongsToMany(CharacterBanner::class, 'character_feature')->orderBy('end_date', 'DESC');
+        return $this->belongsToMany(WeaponBanner::class, 'weapon_feature')->orderBy('end_date', 'DESC');
     }
 
     protected function getLastBannerAttribute() {

@@ -1,21 +1,32 @@
 <script setup lang="ts">
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
-import { CharacterBanner, Character } from '@/models';
-import { WeaponType } from '@/models';
-import { getCharacterBannerName } from '@/helpers';
+import { CharacterBanner, WeaponBanner, Character, Weapon } from '@/models';
+import { WeaponType, Element } from '@/models';
+import { getCharacterBannerName, getWeaponBannerName } from '@/helpers';
 
 defineProps<{
     characterBanners: CharacterBanner[],
+    weaponBanners: WeaponBanner[],
     characters: Character[],
+    weapons: Weapon[],
 }>();
 
 function deleteCharacterBanner(banner: CharacterBanner) {
-    router.delete(route('banner.delete', banner.id));
+    router.delete(route('characterBanner.delete', banner.id));
+}
+
+function deleteWeaponBanner(banner: WeaponBanner) {
+    router.delete(route('weaponBanner.delete', banner.id));
 }
 
 function deleteCharacter(character: Character) {
+    console.log(character);
     router.delete(route('character.delete', character.id));
+}
+
+function deleteWeapon(weapon: Weapon) {
+    router.delete(route('weapon.delete', weapon.id));
 }
 
 </script>
@@ -67,8 +78,56 @@ function deleteCharacter(character: Character) {
                             {{ banner.end_date }}
                         </td>
                         <td>
-                            <v-btn density="compact" :href="route('banner.edit', banner.id)" class="mr-2">Edit</v-btn>
+                            <v-btn density="compact" :href="route('characterBanner.edit', banner.id)" class="mr-2">Edit</v-btn>
                             <v-btn color="red" density="compact" @click.ctrl="deleteCharacterBanner(banner)" class="ml-2">Delete</v-btn>
+                        </td>
+                    </tr>
+                </tbody>
+            </v-table>
+            <h3 class="text-h3 mt-6">Weapon Banners</h3>
+            <v-table density="compact">
+                <thead>
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            Featured
+                        </td>
+                        <td>
+                            Patch
+                        </td>
+                        <td>
+                            start_date
+                        </td>
+                        <td>
+                            end_date
+                        </td>
+                        <td>
+                            Actions
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="banner in weaponBanners" :key="banner.id">
+                        <td>
+                            {{ getWeaponBannerName(banner) }}
+                        </td>
+                        <td>
+                            <v-chip density="compact" v-for="feature in banner.featured" :key="feature.id">{{ feature.name }}</v-chip>
+                        </td>
+                        <td>
+                            {{ banner.patch }}
+                        </td>
+                        <td>
+                            {{ banner.start_date }}
+                        </td>
+                        <td>
+                            {{ banner.end_date }}
+                        </td>
+                        <td>
+                            <v-btn density="compact" :href="route('characterBanner.edit', banner.id)" class="mr-2">Edit</v-btn>
+                            <v-btn color="red" density="compact" @click.ctrl="deleteWeaponBanner(banner)" class="ml-2">Delete</v-btn>
                         </td>
                     </tr>
                 </tbody>
@@ -82,6 +141,9 @@ function deleteCharacter(character: Character) {
                         </td>
                         <td>
                             Weapon Type
+                        </td>
+                        <td>
+                            Element
                         </td>
                         <td>
                             Rarity
@@ -100,11 +162,50 @@ function deleteCharacter(character: Character) {
                             {{ WeaponType[character.weapon_type] }}
                         </td>
                         <td>
+                            {{ Element[character.element] }}
+                        </td>
+                        <td>
                             {{ character.rarity }}
                         </td>
                         <td>
                             <v-btn density="compact" :href="route('character.edit', character.id)" class="mr-2">Edit</v-btn>
                             <v-btn color="red" density="compact" @click.ctrl="deleteCharacter(character)" class="ml-2">Delete</v-btn>
+                        </td>
+                    </tr>
+                </tbody>
+            </v-table>
+            <h3 class="text-h3 mt-6">Weapons</h3>
+            <v-table density="compact">
+                <thead>
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            Weapon Type
+                        </td>
+                        <td>
+                            Rarity
+                        </td>
+                        <td>
+                            Actions
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="weapon in weapons" :key="weapon.id">
+                        <td>
+                            {{ weapon.name }}
+                        </td>
+                        <td>
+                            {{ WeaponType[weapon.weapon_type] }}
+                        </td>
+                        <td>
+                            {{ weapon.rarity }}
+                        </td>
+                        <td>
+                            <v-btn density="compact" :href="route('weapon.edit', weapon.id)" class="mr-2">Edit</v-btn>
+                            <v-btn color="red" density="compact" @click.ctrl="deleteWeapon(weapon)" class="ml-2">Delete</v-btn>
                         </td>
                     </tr>
                 </tbody>

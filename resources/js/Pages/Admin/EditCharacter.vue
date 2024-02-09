@@ -2,7 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-import { Character, Element } from '@/models';
+import { Character, Element, elementSelectOptions, weaponSelectOptions } from '@/models';
 
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
@@ -29,7 +29,7 @@ function storeCharacter() {
     if(id) {
         router.put(route('character.update', id), object)
     } else {
-        router.post(route('character.create'), object);
+        router.post(route('character.store'), object);
     }
 }
 
@@ -42,8 +42,8 @@ function storeCharacter() {
         <v-form @submit.prevent="storeCharacter">
                 <v-text-field v-model="name" label="name"></v-text-field>
                 <v-select v-model="rarity" label="rarity" :items="[3,4,5]"></v-select>
-                <v-select v-model="weapon_type" label="Weapon Type" :items="[0,1,2,3,4,5,6]"></v-select>
-                <v-select v-model="element" label="Element" :items="[0,1,2,3,4,5,6]"></v-select>
+                <v-select v-model="weapon_type" label="Weapon Type" :items="weaponSelectOptions"></v-select>
+                <v-select v-model="element" label="Element" :items="elementSelectOptions"></v-select>
                 <v-text-field v-model="featured_name" label="Featured Name"></v-text-field>
                 <v-btn type="submit">Confirm</v-btn>
         </v-form>

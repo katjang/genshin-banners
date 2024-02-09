@@ -1,4 +1,4 @@
-import { CharacterBanner } from "./models";
+import { CharacterBanner, WeaponBanner } from "./models";
 
 export function getCharacterBannerName(banner: CharacterBanner) {
     if(banner.name) return banner.name;
@@ -8,4 +8,10 @@ export function getCharacterBannerName(banner: CharacterBanner) {
         return featured_five_star.featured_name? featured_five_star.featured_name : 'No name'
     }
     return 'No name';
+}
+
+export function getWeaponBannerName(banner: WeaponBanner) {
+    if(banner.name) return banner.name;
+
+    return "Epitome Invocation";
 }

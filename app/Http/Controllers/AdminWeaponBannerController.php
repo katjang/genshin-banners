@@ -3,23 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\CharacterBanner;
-use App\Models\Character;
+use App\Models\WeaponBanner;
+use App\Models\Weapon;
 use Inertia\Inertia;
 
-class AdminCharacterBannerController extends Controller
+class AdminWeaponBannerController extends Controller
 {
     public function create() {
-        return Inertia::render('Admin/EditCharacterBanner', [
-            'characters' => Character::all(),
+        return Inertia::render('Admin/EditWeaponBanner', [
+            'weapons' => Weapon::all(),
         ]);
     }
 
-    public function edit(Request $request, CharacterBanner $banner) {
+    public function edit(Request $request, WeaponBanner $banner) {
         $banner->featured;
-        return Inertia::render('Admin/EditCharacterBanner', [
+        return Inertia::render('Admin/EditWeaponBanner', [
             'banner' => $banner,
-            'characters' => Character::all(),
+            'weapons' => Weapon::all(),
         ]);
     }
     
@@ -31,7 +31,7 @@ class AdminCharacterBannerController extends Controller
             'featured' => 'required|array'
         ]);
 
-        $banner = CharacterBanner::create([
+        $banner = WeaponBanner::create([
             'name' => $request->name,
             'patch' => $request->patch,
             'start_date' => $request->start_date,
@@ -43,7 +43,7 @@ class AdminCharacterBannerController extends Controller
         return to_route('dashboard')->with('message', 'succesfully created banner');
     }
 
-    public function update(Request $request, CharacterBanner $banner) {
+    public function update(Request $request, WeaponBanner $banner) {
         $request->validate([
             'patch' => 'required',
             'start_date' => 'required|date',
@@ -58,7 +58,7 @@ class AdminCharacterBannerController extends Controller
         return to_route('dashboard')->with('message', 'succesfully updated banner');
     }
 
-    public function delete(Request $request, CharacterBanner $banner) {
+    public function delete(Request $request, WeaponBanner $banner) {
         $banner->delete();
         return to_route('dashboard')->with('message', 'succesfully deleted banner');
     }
