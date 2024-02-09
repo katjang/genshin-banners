@@ -38,9 +38,9 @@ function updateBanner() {
         featured: featured.value,
     };
     if(id) {
-        router.put('/admin/banners/'+id, object);
+        router.put(route('banner.update', id), object);
     } else {
-        router.post('/admin/banners', object);
+        router.post(route('banner.create'), object);
     }
 }
 
