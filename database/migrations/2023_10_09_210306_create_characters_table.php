@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('rarity');
             $table->integer('weapon_type');
             $table->integer('element');
+            $table->string('featured_name')->nullable();
             $table->timestamps();
         });
     }

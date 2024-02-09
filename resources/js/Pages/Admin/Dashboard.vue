@@ -3,6 +3,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Banner, Character } from '@/models';
 import { WeaponType } from '@/models';
+import { getBannerName } from '@/helpers';
 
 defineProps<{
     banners: Banner[],
@@ -43,7 +44,7 @@ defineProps<{
                 <tbody>
                     <tr v-for="banner in banners" :key="banner.id">
                         <td>
-                            {{ banner.name }}
+                            {{ getBannerName(banner) }}
                         </td>
                         <td>
                             <v-chip density="compact" v-for="feature in banner.featured" :key="feature.id">{{ feature.name }}</v-chip>

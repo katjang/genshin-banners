@@ -26,7 +26,6 @@ class AdminBannerController extends Controller
     
     public function store(Request $request) {
         $request->validate([
-            'name' => 'required',
             'patch' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
@@ -47,7 +46,6 @@ class AdminBannerController extends Controller
 
     public function update(Request $request, Banner $banner) {
         $request->validate([
-            'name' => 'required',
             'patch' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',

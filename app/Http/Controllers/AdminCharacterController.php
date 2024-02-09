@@ -22,13 +22,17 @@ class AdminCharacterController extends Controller
         $request->validate([
             'name' => 'required',
             'rarity' => 'required|integer|min:3|max:5',
-            'weapon_type' => 'required|integer|min:0|max:6'
+            'weapon_type' => 'required|integer|min:0|max:6',
+            'element' => 'required|integer|min:0|max:6',
+            'featured_name' => 'optional|string'
         ]);
 
         $character = Character::create([
             'name' => $request->name,
             'rarity' => $request->rarity,
-            'weapon_type' => $request->weapon_type
+            'weapon_type' => $request->weapon_type,
+            'element' => $request->element,
+            'featured_name' => $request->featured_name
         ]);
 
         return to_route('dashboard')->with('message', 'succesfully created character');;
@@ -38,7 +42,9 @@ class AdminCharacterController extends Controller
         $request->validate([
             'name' => 'required',
             'rarity' => 'required|integer|min:3|max:5',
-            'weapon_type' => 'required|integer|min:0|max:6'
+            'weapon_type' => 'required|integer|min:0|max:6',
+            'element' => 'required|integer|min:0|max:6',
+            'featured_name' => 'optional|string'
         ]);
 
         $character->fill($request->all());

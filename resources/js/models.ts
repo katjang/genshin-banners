@@ -4,6 +4,7 @@ export class Character {
     rarity!: number;
     weapon_type!: WeaponType;
     element!: Element;
+    featured_name?: string;
     last_banner?: Banner;
     banners?: Banner[];
 }
@@ -30,7 +31,7 @@ export class Banner {
     id!: number;
     name!: string;
     patch!: string;
-    featured?: Character[];
+    featured!: Character[];
     start_date!: Date;
     end_date!: Date;
 }

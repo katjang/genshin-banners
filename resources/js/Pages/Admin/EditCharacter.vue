@@ -2,7 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-import { Character } from '@/models';
+import { Character, Element } from '@/models';
 
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
@@ -14,20 +14,22 @@ const id = props.character? props.character.id : undefined;
 const name = ref(props.character? props.character.name : '');
 const rarity = ref(props.character? props.character.rarity : 4);
 const weapon_type = ref(props.character? props.character.weapon_type : 0);
+const element = ref(props.character? props.character.element: Element.GEO);
+const featured_name = ref(props.character? props.character.featured_name : '');
+
 
 function storeCharacter() {
+    let object = {
+        name: name.value, 
+        rarity: rarity.value, 
+        weapon_type: weapon_type.value,
+        element: element.value,
+        featured_name: featured_name.value
+    } 
     if(id) {
-        router.put('/admin/character/'+id, {
-            name: name.value, 
-            rarity: rarity.value, 
-            weapon_type: weapon_type.value
-        })
+        router.put('/admin/characters/'+id, object)
     } else {
-        router.post('/admin/characters', {
-            name: name.value, 
-            rarity: rarity.value, 
-            weapon_type: weapon_type.value
-        });
+        router.post('/admin/characters', object);
     }
 }
 
@@ -41,6 +43,8 @@ function storeCharacter() {
                 <v-text-field v-model="name" label="name"></v-text-field>
                 <v-select v-model="rarity" label="rarity" :items="[3,4,5]"></v-select>
                 <v-select v-model="weapon_type" label="Weapon Type" :items="[0,1,2,3,4,5,6]"></v-select>
+                <v-select v-model="element" label="Element" :items="[0,1,2,3,4,5,6]"></v-select>
+                <v-text-field v-model="featured_name" label="Featured Name"></v-text-field>
                 <v-btn type="submit">Confirm</v-btn>
         </v-form>
         </v-container>

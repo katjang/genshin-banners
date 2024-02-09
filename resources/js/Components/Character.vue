@@ -2,6 +2,7 @@
 import { Banner, Character } from '@/models';
 import { WeaponType } from '@/models';
 import Counter from '@/Components/Counter.vue';
+import { getBannerName } from '@/helpers';
 
 const props = defineProps<{
     character: Character,
@@ -81,7 +82,7 @@ if(props.character.banners != undefined) {
                 </template>
                 <v-card v-for="(banner, key) in bannerPeriod">
                     <v-card-title class="text-h6">
-                        {{ banner.name }}
+                        {{ getBannerName(banner) }}
                     </v-card-title>
                     <v-card-text class="bg-white text--primary pt-3">
                         <v-chip v-for="featured in banner.featured" class="ma-1" pill @click="$emit('click-character', featured.id)">
