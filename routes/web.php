@@ -40,12 +40,13 @@ Route::prefix('admin')->group(function () {
         ]);
     })->name('dashboard');
 
-    Route::name('banner.')->controller(AdminCharacterBannerController::class)->group(function() {
-        Route::get('/banners/create', 'create')->name('create');
-        Route::get('/banners/{banner}', 'edit')->name('edit');
-        Route::post('/banners', 'store')->name('store');
-        Route::put('/banners/{banner}', 'update')->name('update');
-        Route::delete('/banners/{banner}', 'delete')->name('delete');
+    Route::name('characterBanner.')->controller(AdminCharacterBannerController::class)->group(function() {
+        Route::get('/characterBanners/create', 'create')->name('create');
+        Route::get('/characterBanners/{banner}', 'edit')->name('edit');
+        Route::post('/characterBanners', 'store')->name('store');
+        Route::put('/characterBanners/{banner}', 'update')->name('update');
+        Route::delete('/characterBanners/{banner}', 'delete')->name('delete');
+    });
     });
 
     Route::name('character.')->controller(AdminCharacterController::class)->group(function() {
