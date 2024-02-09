@@ -40,7 +40,6 @@ class AdminWeaponController extends Controller
             'name' => 'required',
             'rarity' => 'required|integer|min:3|max:5',
             'weapon_type' => 'required|integer|min:0|max:6',
-            'element' => 'required|integer|min:0|max:6',
         ]);
 
         $weapon->fill($request->all());
