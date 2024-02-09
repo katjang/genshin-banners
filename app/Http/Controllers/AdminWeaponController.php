@@ -29,7 +29,6 @@ class AdminWeaponController extends Controller
             'name' => $request->name,
             'rarity' => $request->rarity,
             'weapon_type' => $request->weapon_type,
-            'featured_name' => $request->featured_name
         ]);
 
         return to_route('dashboard')->with('message', 'succesfully created weapon');;
