@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('weapon_feature', function (Blueprint $table) {
             $table->id();
+            $table->integer('weapon_banner_id');
+            $table->integer('weapon_id');
             $table->timestamps();
         });
     }
