@@ -26,12 +26,18 @@ use App\Models\WeaponBanner;
 
 Route::get('/', function () {
     return Inertia::render('Overview', [
-        'characters' => Character::all()->append('last_banner')
+        'characters' => Character::all()->append('last_banner'),
+        'weapons' => Weapon::all()->append('last_banner')
     ]);
 });
 
 Route::get('/characters/{character}', function (Character $character) {
     $ret = Character::with('banners', 'banners.featured')->where('id', $character->id)->first();
+    return $ret;
+});
+
+Route::get('/weapons/{weapon}', function (Weapon $weapon) {
+    $ret = Weapon::with('banners', 'banners.featured')->where('id', $weapon->id)->first();
     return $ret;
 });
 
@@ -86,5 +92,23 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Route::get('fixbanners', function () {
+//     $character_banners = CharacterBanner::with('featured')->get();
+
+//     foreach($character_banners as $banner) {
+//         $characters = $banner->featured;
+
+//         foreach($characters as $char) {
+//             if($char->rarity == 5) {
+//                 $char->featured_name = $banner->name;
+//                 $char->save();
+//                 $banner->name = null;
+//                 $banner->save();
+//                 break;
+//             }
+//         }
+//     }
+// });
 
 require __DIR__.'/auth.php';
