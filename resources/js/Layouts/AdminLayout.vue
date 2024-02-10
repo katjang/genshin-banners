@@ -17,7 +17,9 @@ const snackbar = ref(usePage().props.flash.message != undefined);
                 <v-btn :size="$vuetify.display.smAndDown? 'x-small' : ($vuetify.display.mdAndDown? 'small' : 'default')" prepend-icon="mdi-plus" variant="outlined" class="mx-2 my-1" :href="route('characterBanner.create')">Character Banner</v-btn>
                 <v-btn :size="$vuetify.display.smAndDown? 'x-small' : ($vuetify.display.mdAndDown? 'small' : 'default')" prepend-icon="mdi-plus" variant="outlined" class="mx-2 my-1" :href="route('weaponBanner.create')">Weapon Banner</v-btn>
             </v-row>
-            
+            <template v-slot:extension v-if="$slots.append">
+                <slot name="append"></slot>
+            </template>
         </v-toolbar>
         <!-- Page Content -->
         <main theme="dark">
