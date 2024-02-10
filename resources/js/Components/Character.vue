@@ -8,6 +8,8 @@ const props = defineProps<{
     character: Character,
 }>();
 
+defineEmits(['click-character']);
+
 let banners: {[key: string]: CharacterBanner[]} = {};
 
 if(props.character.banners != undefined) {
