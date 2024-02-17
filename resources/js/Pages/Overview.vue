@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
 import CharacterVue from '@/Components/Character.vue';
+import WeaponVue from '@/Components/Weapon.vue';
 import CharacterListItem from '@/Components/CharacterListItem.vue';
 import WeaponListItem from '@/Components/WeaponListItem.vue';
 import { Character, Weapon } from '@/models';
@@ -70,6 +71,7 @@ async function weaponDetails(id: number) {
     }
 
     const result = (await response.json()) as Weapon;
+
     weaponDialog.value = true;
     selectedWeapon.value = result;
 }
@@ -105,6 +107,16 @@ function filter() {
             <v-sheet dark>
                 <v-container fluid>
                     <CharacterVue :character="selectedCharacter" @click-character="characterDetails($event)"/>
+                </v-container>
+            </v-sheet>
+        </template>
+    </v-dialog>
+    <v-dialog v-model="weaponDialog" close-on-back>
+        <template v-slot:default v-if="selectedWeapon">
+            <v-btn icon="mdi-close" class="position-absolute right-0 mr-n3 mt-n3 z-10"  @click="weaponDialog = false"></v-btn>
+            <v-sheet dark>
+                <v-container fluid>
+                    <WeaponVue :weapon="selectedWeapon" @click-weapon="weaponDetails($event)"/>
                 </v-container>
             </v-sheet>
         </template>
@@ -252,7 +264,6 @@ function filter() {
             </v-container>
         </v-window-item>
     </v-window>
-    
 </template>
 
 <style>

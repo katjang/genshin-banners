@@ -93,22 +93,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('fixbanners', function () {
-//     $character_banners = CharacterBanner::with('featured')->get();
-
-//     foreach($character_banners as $banner) {
-//         $characters = $banner->featured;
-
-//         foreach($characters as $char) {
-//             if($char->rarity == 5) {
-//                 $char->featured_name = $banner->name;
-//                 $char->save();
-//                 $banner->name = null;
-//                 $banner->save();
-//                 break;
-//             }
-//         }
-//     }
-// });
-
 require __DIR__.'/auth.php';
