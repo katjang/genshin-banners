@@ -41,7 +41,8 @@ Route::get('/weapons/{weapon}', function (Weapon $weapon) {
     return $ret;
 });
 
-// ---------------------ADMIN-----------------------------
+// --------------------------------------ADMIN-------------------------------
+// ---- before it will see any production use, auth will be implemented -----
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Admin/Dashboard', [
