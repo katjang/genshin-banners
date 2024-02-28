@@ -51,7 +51,7 @@ class AdminCharacterController extends Controller
         return to_route('dashboard')->with('message', 'succesfully updated character');
     }
 
-    public function delete(Request $request, Character $character) {
+    public function destroy(Request $request, Character $character) {
         $character->delete();
         return to_route('dashboard')->with('message', 'succesfully deleted character');
     }

@@ -27,9 +27,9 @@ function storeWeapon() {
         weapon_type: weapon_type.value,
     } 
     if(id) {
-        router.put(route('weapon.update', id), object)
+        router.put(route('weapons.update', id), object)
     } else {
-        router.post(route('weapon.store'), object);
+        router.post(route('weapons.store'), object);
     }
 }
 

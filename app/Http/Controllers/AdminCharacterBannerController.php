@@ -15,10 +15,10 @@ class AdminCharacterBannerController extends Controller
         ]);
     }
 
-    public function edit(Request $request, CharacterBanner $banner) {
-        $banner->featured;
+    public function edit(Request $request, CharacterBanner $characterBanner) {
+        $characterBanner->featured;
         return Inertia::render('Admin/EditCharacterBanner', [
-            'banner' => $banner,
+            'banner' => $characterBanner,
             'characters' => Character::all(),
         ]);
     }
@@ -31,19 +31,19 @@ class AdminCharacterBannerController extends Controller
             'featured' => 'required|array'
         ]);
 
-        $banner = CharacterBanner::create([
+        $characterBanner = CharacterBanner::create([
             'name' => $request->name,
             'patch' => $request->patch,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date
         ]);
 
-        $banner->featured()->sync($request->featured);
+        $characterBanner->featured()->sync($request->featured);
 
         return to_route('dashboard')->with('message', 'succesfully created banner');
     }
 
-    public function update(Request $request, CharacterBanner $banner) {
+    public function update(Request $request, CharacterBanner $characterBanner) {
         $request->validate([
             'patch' => 'required',
             'start_date' => 'required|date',
@@ -51,15 +51,15 @@ class AdminCharacterBannerController extends Controller
             'featured' => 'required|array'
         ]);
 
-        $banner->fill($request->except('featured'));
-        $banner->featured()->sync($request->featured);
-        $banner->save();
+        $characterBanner->fill($request->except('featured'));
+        $characterBanner->featured()->sync($request->featured);
+        $characterBanner->save();
 
         return to_route('dashboard')->with('message', 'succesfully updated banner');
     }
 
-    public function delete(Request $request, CharacterBanner $banner) {
-        $banner->delete();
+    public function destroy(Request $request, CharacterBanner $characterBanner) {
+        $characterBanner->delete();
         return to_route('dashboard')->with('message', 'succesfully deleted banner');
     }
 }

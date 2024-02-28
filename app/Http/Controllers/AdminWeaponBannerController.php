@@ -58,7 +58,7 @@ class AdminWeaponBannerController extends Controller
         return to_route('dashboard')->with('message', 'succesfully updated banner');
     }
 
-    public function delete(Request $request, WeaponBanner $banner) {
+    public function destroy(Request $request, WeaponBanner $banner) {
         $banner->delete();
         return to_route('dashboard')->with('message', 'succesfully deleted banner');
     }

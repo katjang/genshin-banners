@@ -32,17 +32,15 @@ Route::get('/', function () {
 });
 
 Route::get('/characters/{character}', function (Character $character) {
-    $ret = Character::with('banners', 'banners.featured')->where('id', $character->id)->first();
-    return $ret;
+    return Character::with('banners', 'banners.featured')->where('id', $character->id)->firstOrFail();
 });
 
 Route::get('/weapons/{weapon}', function (Weapon $weapon) {
-    $ret = Weapon::with('banners', 'banners.featured')->where('id', $weapon->id)->first();
-    return $ret;
+    return Weapon::with('banners', 'banners.featured')->where('id', $weapon->id)->firstOrFail();
 });
 
-// --------------------------------------ADMIN-------------------------------
-// ---- before it will see any production use, auth will be implemented -----
+// --------------------------------------<ADMIN>-------------------------------
+// ---- before it will see any production use, auth will be implemented -------
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Admin/Dashboard', [
@@ -53,45 +51,21 @@ Route::prefix('admin')->group(function () {
         ]);
     })->name('dashboard');
 
-    Route::name('weapon.')->controller(AdminWeaponController::class)->group(function() {
-        Route::get('/weapons/create', 'create')->name('create');
-        Route::get('/weapons/{weapon}', 'edit')->name('edit');
-        Route::post('/weapons', 'store')->name('store');
-        Route::put('/weapons/{weapon}', 'update')->name('update');
-        Route::delete('/weapons/{weapon}', 'delete')->name('delete');
-    });
+    Route::resource('weapons', AdminWeaponController::class)->except(['index', 'show']);
 
-    Route::name('character.')->controller(AdminCharacterController::class)->group(function() {
-        Route::get('/characters/create', 'create')->name('create');
-        Route::get('/characters/{character}', 'edit')->name('edit');
-        Route::post('/characters', 'store')->name('store');
-        Route::put('/characters/{character}', 'update')->name('update');
-        Route::delete('/characters/{character}', 'delete')->name('delete');
-    });
+    Route::resource('characters', AdminCharacterController::class)->except(['index', 'show']);
 
-    Route::name('characterBanner.')->controller(AdminCharacterBannerController::class)->group(function() {
-        Route::get('/characterBanners/create', 'create')->name('create');
-        Route::get('/characterBanners/{banner}', 'edit')->name('edit');
-        Route::post('/characterBanners', 'store')->name('store');
-        Route::put('/characterBanners/{banner}', 'update')->name('update');
-        Route::delete('/characterBanners/{banner}', 'delete')->name('delete');
-    });
+    Route::resource('characterBanners', AdminCharacterBannerController::class)->except(['index', 'show']);
 
-    Route::name('weaponBanner.')->controller(AdminWeaponBannerController::class)->group(function() {
-        Route::get('/weaponBanners/create', 'create')->name('create');
-        Route::get('/weaponBanners/{banner}', 'edit')->name('edit');
-        Route::post('/weaponBanners', 'store')->name('store');
-        Route::put('/weaponBanners/{banner}', 'update')->name('update');
-        Route::delete('/weaponBanners/{banner}', 'delete')->name('delete');
-    });
+    Route::resource('weaponBanners', AdminWeaponBannerController::class)->except(['index', 'show']);
 });
 
-// ---------------------ADMIN-----------------------------
+// ---------------------</ADMIN>-----------------------------
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';

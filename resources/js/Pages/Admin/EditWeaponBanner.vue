@@ -27,9 +27,9 @@ function updateBanner() {
         featured: featured.value,
     };
     if(id) {
-        router.put(route('weaponBanner.update', id), object);
+        router.put(route('weaponBanners.update', id), object);
     } else {
-        router.post(route('weaponBanner.store'), object);
+        router.post(route('weaponBanners.store'), object);
     }
 }
 

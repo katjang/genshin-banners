@@ -27,9 +27,9 @@ function storeCharacter() {
         featured_name: featured_name.value
     } 
     if(id) {
-        router.put(route('character.update', id), object)
+        router.put(route('characters.update', id), object)
     } else {
-        router.post(route('character.store'), object);
+        router.post(route('characters.store'), object);
     }
 }
 

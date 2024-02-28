@@ -47,7 +47,7 @@ class AdminWeaponController extends Controller
         return to_route('dashboard')->with('message', 'succesfully updated weapon');
     }
 
-    public function delete(Request $request, Weapon $weapon) {
+    public function destroy(Request $request, Weapon $weapon) {
         $weapon->delete();
         return to_route('dashboard')->with('message', 'succesfully deleted weapon');
     }

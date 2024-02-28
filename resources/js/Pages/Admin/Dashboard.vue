@@ -16,20 +16,20 @@ defineProps<{
 const tab = ref('characters');
 
 function deleteCharacterBanner(banner: CharacterBanner) {
-    router.delete(route('characterBanner.delete', banner.id));
+    router.delete(route('characterBanners.destroy', banner.id));
 }
 
 function deleteWeaponBanner(banner: WeaponBanner) {
-    router.delete(route('weaponBanner.delete', banner.id));
+    router.delete(route('weaponBanners.destroy', banner.id));
 }
 
 function deleteCharacter(character: Character) {
     console.log(character);
-    router.delete(route('character.delete', character.id));
+    router.delete(route('characters.destroy', character.id));
 }
 
 function deleteWeapon(weapon: Weapon) {
-    router.delete(route('weapon.delete', weapon.id));
+    router.delete(route('weapons.destroy', weapon.id));
 }
 
 </script>
@@ -89,7 +89,7 @@ function deleteWeapon(weapon: Weapon) {
                                     {{ character.rarity }}
                                 </td>
                                 <td>
-                                    <v-btn density="compact" :href="route('character.edit', character.id)" class="mr-2">Edit</v-btn>
+                                    <v-btn density="compact" :href="route('characters.edit', character.id)" class="mr-2">Edit</v-btn>
                                     <v-btn color="red" density="compact" @click.ctrl="deleteCharacter(character)" class="ml-2">Delete</v-btn>
                                 </td>
                             </tr>
@@ -129,7 +129,7 @@ function deleteWeapon(weapon: Weapon) {
                                     {{ weapon.rarity }}
                                 </td>
                                 <td>
-                                    <v-btn density="compact" :href="route('weapon.edit', weapon.id)" class="mr-2">Edit</v-btn>
+                                    <v-btn density="compact" :href="route('weapons.edit', weapon.id)" class="mr-2">Edit</v-btn>
                                     <v-btn color="red" density="compact" @click.ctrl="deleteWeapon(weapon)" class="ml-2">Delete</v-btn>
                                 </td>
                             </tr>
@@ -181,7 +181,7 @@ function deleteWeapon(weapon: Weapon) {
                                     {{ banner.end_date }}
                                 </td>
                                 <td>
-                                    <v-btn density="compact" :href="route('characterBanner.edit', banner.id)" class="mr-2">Edit</v-btn>
+                                    <v-btn density="compact" :href="route('characterBanners.edit', banner.id)" class="mr-2">Edit</v-btn>
                                     <v-btn color="red" density="compact" @click.ctrl="deleteCharacterBanner(banner)" class="ml-2">Delete</v-btn>
                                 </td>
                             </tr>
@@ -233,7 +233,7 @@ function deleteWeapon(weapon: Weapon) {
                                     {{ banner.end_date }}
                                 </td>
                                 <td>
-                                    <v-btn density="compact" :href="route('characterBanner.edit', banner.id)" class="mr-2">Edit</v-btn>
+                                    <v-btn density="compact" :href="route('characterBanners.edit', banner.id)" class="mr-2">Edit</v-btn>
                                     <v-btn color="red" density="compact" @click.ctrl="deleteWeaponBanner(banner)" class="ml-2">Delete</v-btn>
                                 </td>
                             </tr>
