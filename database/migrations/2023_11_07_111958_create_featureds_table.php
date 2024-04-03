@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('character_banners', function (Blueprint $table) {
+        Schema::create('featureds', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('patch');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->integer('banner_id');
+            $table->string('featured_type');
+            $table->integer('featured_id');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('character_banners');
+        Schema::dropIfExists('featureds');
     }
 };

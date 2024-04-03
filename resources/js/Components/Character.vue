@@ -1,25 +1,14 @@
 <script setup lang="ts">
-import { CharacterBanner, Character } from '@/models';
+import { Banner, Character } from '@/models';
 import { WeaponType } from '@/models';
 import Counter from '@/Components/Counter.vue';
-import { getCharacterBannerName } from '@/helpers';
+import BannerList from '@/Components/BannerList.vue';
 
 const props = defineProps<{
     character: Character,
 }>();
 
-defineEmits(['click-character']);
-
-let banners: {[key: string]: CharacterBanner[]} = {};
-
-if(props.character.banners != undefined) {
-    banners = props.character.banners.reduce((group: {[key: string]: CharacterBanner[]}, banner) => {
-        const { end_date } = banner;
-        group[end_date.toString()] = group[end_date.toString()] ?? [];
-        group[end_date.toString()].push(banner);
-        return group;
-    }, {});
-}
+defineEmits(['click-character', 'click-weapon']);
 
 </script>
 
@@ -58,44 +47,6 @@ if(props.character.banners != undefined) {
             {{ WeaponType[character.weapon_type].toLowerCase() }}
         </v-card-subtitle>
         
-        <v-timeline>
-            <v-timeline-item v-for="bannerPeriod in banners" :key="bannerPeriod[0].id">
-                <template v-slot:icon v-if="bannerPeriod.length == 1 && bannerPeriod[0].featured">
-                    <v-icon>
-                        <v-avatar size="60" color="white" :image="`/images/portraits/` + bannerPeriod[0].featured[0].name.replace(' ', '_') + `_Icon.png`"></v-avatar>
-                    </v-icon>
-                </template>
-                <template v-slot:icon v-if="bannerPeriod.length == 2 && bannerPeriod[0].featured && bannerPeriod[1].featured">
-                    <v-icon>
-                        <v-avatar size="60" color="white">
-                            <img style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; clip-path: view-box polygon(0% 0%, 0% 100%, 50% 100%, 50% 0);" :src="`/images/portraits/` + bannerPeriod[0].featured[0].name.replace(' ', '_') + `_Icon.png`">
-                            <img style="position absolute; left: 50%; top: 0; width: 100%; height: 100%; clip-path: view-box polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);" :src="`/images/portraits/` + bannerPeriod[1].featured[0].name.replace(' ', '_') + `_Icon.png`">
-                        </v-avatar>
-                    </v-icon>
-                </template>
-                <template v-slot:opposite>
-                    <v-chip pill class="mr-1">
-                        {{ new Date(bannerPeriod[0].start_date).toLocaleString('en-us',{month:'long', year:'numeric', day: 'numeric'}) }}
-                    </v-chip>
-                    <v-icon icon="mdi-calendar-collapse-horizontal"></v-icon>
-                    <v-chip pill class="ml-1">
-                        {{ new Date(bannerPeriod[0].end_date).toLocaleString('en-us',{month:'long', year:'numeric', day: 'numeric'}) }}
-                    </v-chip>
-                </template>
-                <v-card v-for="(banner, key) in bannerPeriod">
-                    <v-card-title class="text-h6">
-                        {{ getCharacterBannerName(banner) }}
-                    </v-card-title>
-                    <v-card-text class="bg-white text--primary pt-3">
-                        <v-chip v-for="featured in banner.featured" class="ma-1" pill @click="$emit('click-character', featured.id)">
-                            <v-avatar start>
-                                <v-img :src="`/images/portraits/` + featured.name.replace(' ', '_') + `_Icon.png`"></v-img>
-                            </v-avatar>
-                            {{ featured.name }}
-                        </v-chip>
-                    </v-card-text>
-                </v-card>
-            </v-timeline-item>
-        </v-timeline>
+        <BannerList :banners="character.banners" @click-character="$emit('click-character', $event)" @click-weapon="$emit('click-weapon', $event)"/>
     </div>
 </template>

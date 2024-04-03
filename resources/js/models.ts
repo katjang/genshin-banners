@@ -5,8 +5,8 @@ export class Character {
     weapon_type!: WeaponType;
     element!: Element;
     featured_name?: string;
-    last_banner?: CharacterBanner;
-    banners?: CharacterBanner[];
+    last_banner?: Banner;
+    banners?: Banner[];
 }
 
 export class Weapon {
@@ -14,8 +14,8 @@ export class Weapon {
     name!: string;
     rarity!: number;
     weapon_type!: WeaponType;
-    last_banner?: WeaponBanner;
-    banners?: WeaponBanner[];
+    last_banner?: Banner;
+    banners?: Banner[];
 }
 
 export enum WeaponType {
@@ -91,20 +91,12 @@ export const elementSelectOptions: any = [
     }
 ];
 
-export class CharacterBanner {
+export class Banner {
     id!: number;
     name!: string;
     patch!: string;
-    featured!: Character[];
-    start_date!: Date;
-    end_date!: Date;
-}
-
-export class WeaponBanner {
-    id!: number;
-    name!: string;
-    patch!: string;
-    featured!: Weapon[];
+    weapons!: Weapon[];
+    characters!: Character[];
     start_date!: Date;
     end_date!: Date;
 }

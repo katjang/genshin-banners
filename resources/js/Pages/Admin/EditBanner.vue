@@ -2,30 +2,34 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-import { CharacterBanner, Character } from '@/models';
+import { Banner, Character, Weapon } from '@/models';
 
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 const props = defineProps<{
-    banner?: CharacterBanner;
+    banner?: Banner;
     characters: Character[],
+    weapons: Weapon[],
 }>();
 
 const id = props.banner? props.banner.id : undefined;
 const name = ref(props.banner? props.banner.name : '');
-const featured = ref(props.banner? props.banner.featured.map(m => m.id) : []);
+const featured_characters = ref(props.banner? props.banner.characters.map(m => m.id) : []);
+const featured_weapons = ref(props.banner? props.banner.weapons.map(m => m.id) : []);
 const patch = ref(props.banner? props.banner.patch : '');
 const start_date = ref(props.banner? props.banner.start_date : '');
 const end_date = ref(props.banner? props.banner.end_date : '');
-const banner_name_placeholder = ref(props.banner? (props.banner.featured?.find((c: Character) => c.rarity == 5)?.featured_name) : '');
+const banner_name_placeholder = ref(props.banner? (props.banner.characters?.find((c: Character) => c.rarity == 5)?.featured_name) : '');
 if(banner_name_placeholder.value == undefined) banner_name_placeholder.value = '';
 
 function changeFeatured() {
-    let featured_characters = props.characters.filter(c => featured.value.indexOf(c.id) > -1);
-    let featured_five_star = featured_characters.find(c => c.rarity == 5);
+    let a_featured_characters = props.characters.filter(c => featured_characters.value.indexOf(c.id) > -1);
+    let featured_five_star = a_featured_characters.find(c => c.rarity == 5);
 
-    if(featured_five_star) {
+    if(featured_five_star && featured_weapons.value.length == 0) {
         banner_name_placeholder.value = featured_five_star.featured_name? featured_five_star.featured_name : '';
+    } else {
+        banner_name_placeholder.value = '';
     }
 }
 
@@ -35,12 +39,13 @@ function updateBanner() {
         patch: patch.value,
         start_date: start_date.value, 
         end_date: end_date.value,
-        featured: featured.value,
+        featured_characters: featured_characters.value,
+        featured_weapons: featured_weapons.value,
     };
     if(id) {
-        router.put(route('characterBanners.update', id), object);
+        router.put(route('banners.update', id), object);
     } else {
-        router.post(route('characterBanners.store'), object);
+        router.post(route('banners.store'), object);
     }
 }
 
@@ -65,8 +70,18 @@ function updateBanner() {
                         chips 
                         multiple 
                         label="Characters" 
-                        v-model="featured" 
+                        v-model="featured_characters" 
                         :items="characters" 
+                        item-title="name" 
+                        item-value="id"
+                        @update:modelValue="changeFeatured"
+                    ></v-autocomplete>
+                    <v-autocomplete 
+                        chips 
+                        multiple 
+                        label="Weapons" 
+                        v-model="featured_weapons" 
+                        :items="weapons" 
                         item-title="name" 
                         item-value="id"
                         @update:modelValue="changeFeatured"

@@ -2,14 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminCharacterController;
-use App\Http\Controllers\AdminCharacterBannerController;
+use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminWeaponController;
-use App\Http\Controllers\AdminWeaponBannerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Character;
-use App\Models\CharacterBanner;
+use App\Models\Banner;
 use App\Models\Weapon;
 use App\Models\WeaponBanner;
 
@@ -32,11 +31,11 @@ Route::get('/', function () {
 });
 
 Route::get('/characters/{character}', function (Character $character) {
-    return Character::with('banners', 'banners.featured')->where('id', $character->id)->firstOrFail();
+    return Character::with(['banners', 'banners.characters', 'banners.weapons'])->where('id', $character->id)->firstOrFail();
 });
 
 Route::get('/weapons/{weapon}', function (Weapon $weapon) {
-    return Weapon::with('banners', 'banners.featured')->where('id', $weapon->id)->firstOrFail();
+    return Weapon::with('banners', 'banners.characters', 'banners.weapons')->where('id', $weapon->id)->firstOrFail();
 });
 
 // --------------------------------------<ADMIN>-------------------------------
@@ -45,9 +44,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Admin/Dashboard', [
             'characters' => Character::all(),
-            'characterBanners' => CharacterBanner::with('featured')->orderBy('start_date', 'DESC')->get(),
+            'banners' => Banner::with('weapons', 'characters')->orderBy('start_date', 'DESC')->get(),
             'weapons' => Weapon::all(),
-            'weaponBanners' => WeaponBanner::with('featured')->orderBy('start_date', 'DESC')->get(),
         ]);
     })->name('dashboard');
 
@@ -55,9 +53,7 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('characters', AdminCharacterController::class)->except(['index', 'show']);
 
-    Route::resource('characterBanners', AdminCharacterBannerController::class)->except(['index', 'show']);
-
-    Route::resource('weaponBanners', AdminWeaponBannerController::class)->except(['index', 'show']);
+    Route::resource('banners', AdminBannerController::class)->except(['index', 'show']);
 });
 
 // ---------------------</ADMIN>-----------------------------
